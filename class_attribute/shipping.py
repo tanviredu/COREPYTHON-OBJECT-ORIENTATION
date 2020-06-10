@@ -32,8 +32,8 @@ class ShippingContiner:
     ## and it can be used with initialize the class with 
     ## different different parameter
     @classmethod
-    def create_empty(cls,owner_code):
-        return cls(owner_code,contents=[])
+    def create_empty(cls,owner_code,**kwargs):
+        return cls(owner_code,contents=[],*kwargs)
     
     @classmethod
     def create_with_default(cls,contents):
@@ -41,13 +41,13 @@ class ShippingContiner:
         return cls(cls.owner_code,contents)
     
     @classmethod
-    def create_with_items(cls,owner_code,items):
-        return cls(owner_code,contents=list(items))
+    def create_with_items(cls,owner_code,items,**kwargs):
+        return cls(owner_code,contents=list(items),**kwargs)
     
     
     
     ## this is the dunder init (connstructor method)
-    def __init__(self,owner_code,contents):
+    def __init__(self,owner_code,contents,**kwargs):
         self.owner_code = owner_code
         self.contents = contents
         ## class attribute shuld be called with the 
@@ -66,6 +66,29 @@ class ShippingContiner:
 
 class ReGrigetorShippingContainer(ShippingContiner):
     
+    
+    MAX_CELCIUS = 4.0
+    
+    def __init__(self,owner_code,contents,*,celsius,**kwargs):
+        super().__init__(owner_code,contents,**kwargs)
+        
+        if(celsius > ReGrigetorShippingContainer.MAX_CELCIUS):
+            raise ValueError("Temperature is too hot")
+        self.celsius = celsius
+        
+    
+    
+    ## this is the getter    
+    @property
+    def celsius(self):
+        return self._celsius
+    
+    @celsius.setter
+    def celsius(self,value):
+        if(value > ReGrigetorShippingContainer.MAX_CELCIUS):
+            raise ValueError("Temparutere is hot")
+        
+        self._celsius = value
     
     ## overwriting the static method
     @staticmethod
@@ -102,8 +125,8 @@ def main():
     
     
     ## this use the parent init dunder method
-    r1 = ReGrigetorShippingContainer("MAE",['fish'])
-    print(r1.bic)
+    #r1 = ReGrigetorShippingContainer("MAE",['fish'])
+    #print(r1.bic)
     ## this use new class method
     # print(ReGrigetorShippingContainer._make_bic_code('MAE',1234))
     
@@ -111,6 +134,11 @@ def main():
     # print(c._make_bic_code("MAE",1234))
     # r = ReGrigetorShippingContainer("MAE",['peas'])
     # print(r._make_bic_code("MAE",1234))
+    r3 = ReGrigetorShippingContainer.create_with_items('ESC',['onions'],celsius=2.0)
+    print(r3.contents)
+    print(r3.celsius)
+    r3.celsius = 1
+    print(r3.celsius)
 main()
 
     
