@@ -35,6 +35,10 @@ class ShippingContiner:
     def create_empty(cls,owner_code,**kwargs):
         return cls(owner_code,contents=[],*kwargs)
     
+    
+    
+    
+    
     @classmethod
     def create_with_default(cls,contents):
         cls.owner_code = "bd"
@@ -71,10 +75,38 @@ class ReGrigetorShippingContainer(ShippingContiner):
     
     def __init__(self,owner_code,contents,*,celsius,**kwargs):
         super().__init__(owner_code,contents,**kwargs)
-        
-        if(celsius > ReGrigetorShippingContainer.MAX_CELCIUS):
-            raise ValueError("Temperature is too hot")
         self.celsius = celsius
+        
+        
+        
+    
+    ## getter and setter for the farenheit
+    
+    @property
+    def farenheit(self):
+        return ReGrigetorShippingContainer._c_to_f(self.celsius)
+    
+    @farenheit.setter
+    def farenheit(self,value):
+        self.celsius = ReGrigetorShippingContainer._f_to_c(value)
+    
+    
+        
+    # adding converting static method
+    
+    @staticmethod
+    def _c_to_f(celsius):
+        return celsius *9/5 +32
+    
+    @staticmethod
+    
+    def _f_to_c(farenheit):
+        return (farenheit -32) *5/9    
+        
+        
+        
+    
+    
         
     
     
@@ -137,7 +169,7 @@ def main():
     r3 = ReGrigetorShippingContainer.create_with_items('ESC',['onions'],celsius=2.0)
     print(r3.contents)
     print(r3.celsius)
-    r3.celsius = 1
+    r3.celsius = 2
     print(r3.celsius)
 main()
 
