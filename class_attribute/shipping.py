@@ -59,6 +59,21 @@ class ShippingContiner:
             
         )
         
+
+
+
+class ReGrigetorShippingContainer(ShippingContiner):
+    
+    
+    ## overwriting the static method
+    @staticmethod
+    def _make_bic_code(owner_code, serial):
+        return iso6346.create(
+            owner_code = owner_code,
+            serial=str(serial).zfill(6),
+            category="R"
+        )
+        
         
         
         
@@ -79,8 +94,21 @@ def main():
     
     # c5 =ShippingContiner.create_with_items("MAE",["food",'Books','cloth'])
     # print(c5.contents)
-    c = ShippingContiner.create_empty("YML")
-    print(c.bic)
+    # c = ShippingContiner.create_empty("YML")
+    # print(c.bic)
+    print(ShippingContiner._make_bic_code("MAE",'1234'))
+    
+    
+    ## this use the parent init dunder method
+    r1 = ReGrigetorShippingContainer("MAE",['fish'])
+    print(r1.bic)
+    ## this use new class method
+    print(ReGrigetorShippingContainer._make_bic_code('MAE',1234))
+    
+    c = ShippingContiner("MAE",['textile'])
+    print(c._make_bic_code("MAE",1234))
+    r = ReGrigetorShippingContainer("MAE",['peas'])
+    print(r._make_bic_code("MAE",1234))
 main()
 
     
