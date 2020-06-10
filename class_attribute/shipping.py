@@ -53,7 +53,9 @@ class ShippingContiner:
         ## class attribute shuld be called with the 
         ## after the clas method
         
-        self.bic = ShippingContiner._make_bic_code(
+        
+        ## now it will read the property of the refrigaretor class
+        self.bic = self._make_bic_code(
             owner_code=owner_code,
             serial=ShippingContiner._generate_serial()
             
@@ -96,19 +98,19 @@ def main():
     # print(c5.contents)
     # c = ShippingContiner.create_empty("YML")
     # print(c.bic)
-    print(ShippingContiner._make_bic_code("MAE",'1234'))
+    # print(ShippingContiner._make_bic_code("MAE",'1234'))
     
     
     ## this use the parent init dunder method
     r1 = ReGrigetorShippingContainer("MAE",['fish'])
     print(r1.bic)
     ## this use new class method
-    print(ReGrigetorShippingContainer._make_bic_code('MAE',1234))
+    # print(ReGrigetorShippingContainer._make_bic_code('MAE',1234))
     
-    c = ShippingContiner("MAE",['textile'])
-    print(c._make_bic_code("MAE",1234))
-    r = ReGrigetorShippingContainer("MAE",['peas'])
-    print(r._make_bic_code("MAE",1234))
+    # c = ShippingContiner("MAE",['textile'])
+    # print(c._make_bic_code("MAE",1234))
+    # r = ReGrigetorShippingContainer("MAE",['peas'])
+    # print(r._make_bic_code("MAE",1234))
 main()
 
     
